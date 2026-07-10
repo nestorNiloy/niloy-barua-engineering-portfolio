@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------
+   Design tokens — Niloy Barua Engineering Portfolio
+   Semantic color system, mapped to Tailwind v4 @theme.
+   Light values first, dark values applied via .dark class below.
+----------------------------------------------------------------- */
+
+@theme {
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Code", monospace;
+
+  --color-bg-base: #F4F7FC;
+  --color-bg-surface: #FFFFFF;
+  --color-border-subtle: #E2E8F0;
+  --color-brand-primary: #2563EB;
+  --color-brand-accent: #7C3AED;
+  --color-text-main: #1E293B;
+  --color-text-muted: #64748B;
+}
+
+.dark {
+  --color-bg-base: #090A0F;
+  --color-bg-surface: #121420;
+  --color-border-subtle: #1F2437;
+  --color-brand-primary: #3B82F6;
+  --color-brand-accent: #A78BFA;
+  --color-text-main: #F8FAFC;
+  --color-text-muted: #94A3B8;
+}
+
+/* ---------------------------------------------------------------
+   Base layer
+----------------------------------------------------------------- */
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  background-color: var(--color-bg-base);
+  color: var(--color-text-main);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+/* Visible keyboard focus everywhere — no invisible-focus anti-pattern */
+:focus-visible {
+  outline: 2px solid var(--color-brand-primary);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---------------------------------------------------------------
+   Project card accent — slow-moving gradient sheen on the top edge,
+   subtle rather than a neon glow.
+----------------------------------------------------------------- */
+@keyframes card-shimmer {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+.card-accent-bar {
+  background-image: linear-gradient(
+    90deg,
+    var(--color-brand-primary),
+    var(--color-brand-accent),
+    var(--color-brand-primary)
+  );
+  background-size: 200% 100%;
+  animation: card-shimmer 6s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-accent-bar {
+    animation: none;
+  }
+}
