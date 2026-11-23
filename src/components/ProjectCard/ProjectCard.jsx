@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, ExternalLink, Code2, FileText, BookOpen } from 'lucide-react'
+import { X, ExternalLink, Code2, FileText } from 'lucide-react'
 import { Badge } from '../Badge/Badge'
 import { Button } from '../Button/Button'
 import { AnimatedNumber } from '../AnimatedNumber/AnimatedNumber'
@@ -23,8 +23,8 @@ function CardMetric({ label, value, suffix = '' }) {
 
 /**
  * Project card + detail modal. The title/summary block opens the modal;
- * Code/Live/Docs are real sibling <a> elements, not nested inside a
- * <button>, so they stay valid HTML and keyboard/screen-reader friendly.
+ * Project links are sibling anchors, not nested inside a button, so they
+ * remain valid HTML and keyboard/screen-reader friendly.
  */
 export function ProjectCard({ project }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -123,19 +123,9 @@ export function ProjectCard({ project }) {
               <ExternalLink size={16} aria-hidden="true" /> Live
             </Button>
           )}
-          {!project.live && links.frontendPreview && (
-            <Button variant="secondary" href={links.frontendPreview}>
-              <ExternalLink size={16} aria-hidden="true" /> Frontend preview
-            </Button>
-          )}
           {links.dashboard && (
             <Button variant="secondary" href={links.dashboard}>
               <ExternalLink size={16} aria-hidden="true" /> Power BI dashboard
-            </Button>
-          )}
-          {links.notebook && (
-            <Button variant="secondary" href={links.notebook}>
-              <BookOpen size={16} aria-hidden="true" /> Notebook
             </Button>
           )}
           {links.api && (
@@ -238,19 +228,9 @@ export function ProjectCard({ project }) {
                     <ExternalLink size={16} aria-hidden="true" /> API docs
                   </Button>
                 )}
-                {!project.live && links.frontendPreview && (
-                  <Button variant="secondary" href={links.frontendPreview}>
-                    <ExternalLink size={16} aria-hidden="true" /> Frontend preview
-                  </Button>
-                )}
                 {links.dashboard && (
                   <Button variant="secondary" href={links.dashboard}>
                     <ExternalLink size={16} aria-hidden="true" /> Power BI dashboard
-                  </Button>
-                )}
-                {links.notebook && (
-                  <Button variant="secondary" href={links.notebook}>
-                    <BookOpen size={16} aria-hidden="true" /> Notebook
                   </Button>
                 )}
                 {links.api && (
