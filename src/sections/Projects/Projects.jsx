@@ -7,8 +7,8 @@ export function Projects() {
       <div className="mb-10 max-w-lg">
         <h2 className="font-display text-3xl font-bold text-text-main">Featured projects</h2>
         <p className="mt-2 text-text-muted">
-          Seven projects, four live in production — each opens with the real
-          problem, architecture, and what actually went wrong while building it.
+          Seven projects, five with deployed demos. Open a project to see its
+          purpose, implementation, trade-offs and the tools used to build it.
         </p>
       </div>
       <div className="flex flex-col gap-6">
