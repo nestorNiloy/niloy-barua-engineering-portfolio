@@ -95,3 +95,26 @@ h1, h2, h3, h4, h5, h6 {
     animation: none;
   }
 }
+
+
+/* Multi-select project filters — restrained glow when active. */
+.project-filter-chip-active {
+  border-color: var(--color-brand-primary);
+  background: color-mix(in srgb, var(--color-brand-primary) 15%, var(--color-bg-surface));
+  color: var(--color-text-main);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--color-brand-primary) 35%, transparent),
+    0 0 14px color-mix(in srgb, var(--color-brand-primary) 28%, transparent);
+}
+
+.project-filter-chip-active:hover {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--color-brand-primary) 45%, transparent),
+    0 0 20px color-mix(in srgb, var(--color-brand-primary) 38%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-filter-chip {
+    transition: none;
+  }
+}
