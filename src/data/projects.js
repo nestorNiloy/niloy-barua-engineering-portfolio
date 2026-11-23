@@ -121,7 +121,7 @@ export const projects = [
   },
   {
     id: "european-city-score-engine",
-    tags: ["Data Engineering","Analytics & BI"],
+    tags: ["Analytics & BI","Data Analysis"],
     title: "European City Score Engine",
     subtitle: "Interactive city comparison using weighted scoring",
     category: "Data Analysis & Visualization",
