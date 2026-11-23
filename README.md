@@ -11,8 +11,8 @@ The portfolio currently presents eight projects:
 - **Transit Intelligence Platform** — FastAPI application for regional rail delay analytics, with generated demo data and manually triggered HAFAS ingestion.
 - **ATM Transaction Dashboard** — Flask API and separate Chart.js dashboard for ATM transaction analysis.
 - **European City Score Engine** — Streamlit app comparing five cities using job-market and reference data.
-- **TechTrack Germany** — static Leaflet map for exploring degree programme entries; the dataset includes sample placeholders noted in that repository.
 - **Job Market Analyzer** — Python/Jupyter analysis of 61,953 job postings, accompanied by a Power BI report.
+- **TechTrack Germany** — static Leaflet map for exploring degree programme entries; the dataset includes sample placeholders noted in that repository.
 - **Job Application Tracking Agent** — FastAPI prototype using Adzuna job listings and rule-based skill matching; it does not use an LLM to generate application content or submit applications automatically.
 
 Deployment status and data limitations are described in the individual project details. A deployed demo does not necessarily mean that its free hosting tier is always awake or that its data persists indefinitely.
