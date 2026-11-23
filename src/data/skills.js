@@ -1,51 +1,49 @@
 /**
- * Skills grouped by category for the tech-stack grid.
- * Kept to technologies actually used and shipped across the four
- * confirmed projects — not an aspirational list.
+ * Technologies used in the projects shown here. This is a record of tools
+ * used in the codebases, not a claim of professional-level mastery.
  */
-
 export const skills = [
   {
     category: "Languages",
-    items: ["Python", "Java 17", "JavaScript"],
+    items: ["Python", "Java 17", "JavaScript", "HTML", "CSS"],
   },
   {
-    category: "Backend & Frameworks",
-    items: ["FastAPI", "Spring Boot 3.2", "SQLAlchemy 2.0 (async)", "Spring Data JPA / Hibernate", "Pydantic v2"],
+    category: "Backend",
+    items: ["FastAPI", "Flask", "Spring Boot 3.4.5", "Spring Security", "SQLAlchemy 2.0", "Spring Data JPA", "Hibernate", "Pydantic v2"],
   },
   {
-    category: "Data & Databases",
-    items: ["SQLite", "Pandas", "Matplotlib", "Seaborn"],
+    category: "Data & Visualization",
+    items: ["PostgreSQL", "SQLite", "Pandas", "Matplotlib", "Seaborn", "Plotly", "Chart.js", "Leaflet.js", "Power BI"],
   },
   {
-    category: "Tooling & Deployment",
-    items: ["Streamlit", "Maven", "Git", "GitHub Actions", "Railway", "Jupyter Notebook"],
+    category: "Testing & Tooling",
+    items: ["JUnit 5", "Mockito", "Testcontainers", "JaCoCo", "pytest", "Maven", "Docker", "Git", "GitHub Actions"],
+  },
+  {
+    category: "Deployment & UI",
+    items: ["Render", "GitHub Pages", "Streamlit", "Jinja2", "Framer Motion", "Tailwind CSS"],
   },
 ]
 
-/**
- * Engineering principles panel — real patterns pulled from the
- * architecture sections of the projects above, not a generic list.
- */
 export const principles = [
   {
-    title: "Layered Architecture",
+    title: "Separation of Responsibilities",
     description:
-      "Controller/Service/Repository in the Spring Boot tracker; router/service/data-layer split in the Streamlit and FastAPI projects. Business logic never sits directly on top of the database.",
+      "DualTrack Enterprise separates controllers, services and repositories. The Python projects also separate request handling, data access and application-specific processing.",
   },
   {
-    title: "Async-First Backend Design",
+    title: "Validation and Access Control",
     description:
-      "Transit Intel Platform runs on SQLAlchemy 2.0's async engine end to end, so live external API calls don't block request handling.",
+      "The Spring Boot application uses request validation, session authentication, CSRF protection and user-ownership checks. Transit ingestion endpoints are protected by an admin key in production.",
   },
   {
-    title: "Graceful Degradation on Unreliable Data Sources",
+    title: "Testing and Continuous Integration",
     description:
-      "Live integrations (Adzuna, Deutsche Bahn's HAFAS feed) fail sometimes. Retry-then-log-and-skip beats retry-until-crash for anything pulling from a public, unauthenticated API.",
+      "DualTrack Enterprise includes JUnit and PostgreSQL integration tests, with GitHub Actions running the build and test workflow. Transit Intel Platform also has pytest checks and a CI workflow.",
   },
   {
-    title: "Deduplication by Source Identity",
+    title: "Working with External Data",
     description:
-      "Records from re-scraped or re-polled sources are matched by the source's own ID (HAFAS tripId, Adzuna external_id) rather than by insert order, so re-running ingestion never duplicates data.",
+      "The Adzuna and HAFAS integrations normalize external responses and handle repeated records. The Transit demo clearly separates generated sample observations from manually ingested departures.",
   },
 ]
