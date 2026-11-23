@@ -17,7 +17,7 @@ const LINES = [
   <>    <span className="text-brand-accent">"Session-Based Authentication"</span>,</>,
   <>    <span className="text-brand-accent">"Graceful Degradation"</span></>,
   <>  ],</>,
-  <>  <span className="text-brand-primary">"status"</span>: <span className="text-brand-accent">"Building and improving practical software projects"</span></>,
+  <>  <span className="text-brand-primary">"status"</span>: <span className="text-brand-accent">"Building practical software projects"</span></>,
   <>{'}'}</>,
 ]
 
