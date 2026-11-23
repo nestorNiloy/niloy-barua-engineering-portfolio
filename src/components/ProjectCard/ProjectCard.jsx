@@ -128,9 +128,19 @@ export function ProjectCard({ project }) {
               <ExternalLink size={16} aria-hidden="true" /> Frontend preview
             </Button>
           )}
+          {links.dashboard && (
+            <Button variant="secondary" href={links.dashboard}>
+              <ExternalLink size={16} aria-hidden="true" /> Power BI dashboard
+            </Button>
+          )}
           {links.notebook && (
             <Button variant="secondary" href={links.notebook}>
               <BookOpen size={16} aria-hidden="true" /> Notebook
+            </Button>
+          )}
+          {links.api && (
+            <Button variant="secondary" href={links.api}>
+              <ExternalLink size={16} aria-hidden="true" /> API
             </Button>
           )}
           {links.github && (
@@ -233,9 +243,19 @@ export function ProjectCard({ project }) {
                     <ExternalLink size={16} aria-hidden="true" /> Frontend preview
                   </Button>
                 )}
+                {links.dashboard && (
+                  <Button variant="secondary" href={links.dashboard}>
+                    <ExternalLink size={16} aria-hidden="true" /> Power BI dashboard
+                  </Button>
+                )}
                 {links.notebook && (
                   <Button variant="secondary" href={links.notebook}>
                     <BookOpen size={16} aria-hidden="true" /> Notebook
+                  </Button>
+                )}
+                {links.api && (
+                  <Button variant="secondary" href={links.api}>
+                    <ExternalLink size={16} aria-hidden="true" /> API
                   </Button>
                 )}
                 {links.github && (
