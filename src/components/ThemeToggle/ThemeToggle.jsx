@@ -12,7 +12,7 @@ export function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      aria-label="Toggle system color theme layer"
+      aria-label="Switch colour theme"
       className="rounded-md p-2 text-text-muted transition-colors hover:text-text-main"
     >
       {isDark ? <Sun size={18} aria-hidden="true" /> : <Moon size={18} aria-hidden="true" />}
