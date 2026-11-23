@@ -6,6 +6,7 @@
 export const projects = [
   {
     id: "dualtrack-enterprise",
+    tags: ["Enterprise Architecture","Backend & APIs","Full-Stack Engineering","CI/CD","Automated Testing"],
     title: "DualTrack Enterprise",
     subtitle: "Multi-user job application management system",
     category: "Java Backend & Enterprise Development",
@@ -32,7 +33,37 @@ export const projects = [
     },
   },
   {
+    id: "bookloop-lite",
+    tags: ["Full-Stack Engineering","Backend & APIs","CI/CD","Automated Testing"],
+    title: "BookLoop Lite",
+    subtitle: "Peer-to-peer book circulation platform",
+    category: "Full-Stack Engineering",
+    live: true,
+    metrics: [
+      { label: "Complete workflows", value: 2 },
+      { label: "Client / server", value: "React + Express" },
+      { label: "Persistence", value: "lowdb JSON" },
+    ],
+    summary:
+      "A full-stack application where members manage personal book shelves, publish listings and request to borrow or exchange books. Registration, login, catalogue, listings and the Borrow and Exchange workflows are implemented. Sale and Rent are workflow prototypes without payment processing.",
+    problem:
+      "A peer-to-peer book community needs more than a catalogue: members need accounts, ownership-aware listings and clear request states that prevent the same book from being committed to conflicting transactions.",
+    architecture:
+      "A React 18 and Vite single-page application communicates with a Node.js and Express REST API. The backend uses JWTs in HTTP-only cookies for authentication, bcryptjs for password hashing and lowdb for JSON-file persistence. The frontend and backend are deployed separately on Vercel and Render.",
+    challenges:
+      "The Exchange workflow requires the requester to select a book they own and reserves both books while the request is pending. Declining restores the reservations; completing an exchange transfers ownership in both directions. Request-changing operations are serialized within the single Node.js process to reduce overlapping read-modify-write updates; this is not distributed locking.",
+    lessons:
+      "The project includes backend integration tests and a GitHub Actions workflow that runs the tests, builds the frontend and audits dependencies. The current lowdb JSON store and free-host filesystem are suitable for a demonstration, not durable production storage. Sale and Rent do not process payments; rental periods, returns and overdue handling are not implemented.",
+    technologies: ["React 18", "Vite 6", "React Router 7", "Axios", "Node.js", "Express 4", "REST API", "JWT", "HTTP-only Cookies", "bcryptjs", "lowdb", "Node.js Test Runner", "GitHub Actions", "Vercel", "Render"],
+    links: {
+      live: "https://bookloop-lite.vercel.app",
+      api: "https://bookloop-lite-backend.onrender.com",
+      github: "https://github.com/nestorNiloy/bookloop-lite",
+    },
+  },
+  {
     id: "transit-intel-platform",
+    tags: ["Backend & APIs","Data Engineering","Analytics & BI","CI/CD","Automated Testing"],
     title: "Transit Intelligence Platform",
     subtitle: "Public transport delay analytics with a FastAPI backend",
     category: "Python Backend & Data Processing",
@@ -61,6 +92,7 @@ export const projects = [
   },
   {
     id: "atm-transaction-dashboard",
+    tags: ["Full-Stack Engineering","Backend & APIs","Data Engineering","Analytics & BI"],
     title: "ATM Transaction Dashboard",
     subtitle: "Banking operations analytics with a separate Flask API",
     category: "Full-Stack Analytics",
@@ -89,6 +121,7 @@ export const projects = [
   },
   {
     id: "european-city-score-engine",
+    tags: ["Data Engineering","Analytics & BI"],
     title: "European City Score Engine",
     subtitle: "Interactive city comparison using weighted scoring",
     category: "Data Analysis & Visualization",
@@ -115,34 +148,8 @@ export const projects = [
     },
   },
   {
-    id: "techtrack-germany",
-    title: "TechTrack Germany — CS Bachelor Map",
-    subtitle: "Interactive map for exploring degree programmes in Germany",
-    category: "JavaScript & Geospatial Visualization",
-    live: true,
-    metrics: [
-      { label: "Programme entries", value: 33 },
-      { label: "Sample placeholders", value: 6 },
-      { label: "Filter dimensions", value: 3 },
-    ],
-    summary:
-      "A browser-based Leaflet map for exploring 33 Computer Science and related bachelor programme entries in Germany. It supports search, full-time/dual-study filters, a tuition filter and a saved watchlist. The dataset includes six sample placeholders, which are identified in the repository documentation.",
-    problem:
-      "Comparing degree programmes requires checking separate university pages for location, study format, language and tuition information. This map brings the stored programme entries into one searchable interface.",
-    architecture:
-      "A static HTML, CSS and vanilla JavaScript application. Leaflet renders the map, data.js stores programme entries, app.js handles filtering and map/list interaction, and localStorage persists the watchlist in the browser. There is no application backend or build step.",
-    challenges:
-      "The project stores programme details in a manually maintained data file, so entries need ongoing verification against official university pages. The repository documentation explicitly marks six entries as sample placeholders rather than verified programme records.",
-    lessons:
-      "A small static application can provide useful search, map and persistence features without a frontend framework or backend when the data and interaction requirements are limited.",
-    technologies: ["JavaScript", "HTML", "CSS", "Leaflet.js", "Browser localStorage", "GitHub Pages"],
-    links: {
-      live: "https://nestorniloy.github.io/TechTrack-Germany-CS-Bachelors/",
-      github: "https://github.com/nestorNiloy/TechTrack-Germany-CS-Bachelors",
-    },
-  },
-  {
     id: "job-market-analyzer",
+    tags: ["Analytics & BI","Data Analysis"],
     title: "Job Market Analyzer",
     subtitle: "Exploratory analysis of 61,953 job postings",
     category: "Data Analysis & Business Intelligence",
@@ -169,7 +176,36 @@ export const projects = [
     },
   },
   {
+    id: "techtrack-germany",
+    tags: ["Geospatial & Mapping","Frontend Engineering"],
+    title: "TechTrack Germany — CS Bachelor Map",
+    subtitle: "Interactive map for exploring degree programmes in Germany",
+    category: "JavaScript & Geospatial Visualization",
+    live: true,
+    metrics: [
+      { label: "Programme entries", value: 33 },
+      { label: "Sample placeholders", value: 6 },
+      { label: "Filter dimensions", value: 3 },
+    ],
+    summary:
+      "A browser-based Leaflet map for exploring 33 Computer Science and related bachelor programme entries in Germany. It supports search, full-time/dual-study filters, a tuition filter and a saved watchlist. The dataset includes six sample placeholders, which are identified in the repository documentation.",
+    problem:
+      "Comparing degree programmes requires checking separate university pages for location, study format, language and tuition information. This map brings the stored programme entries into one searchable interface.",
+    architecture:
+      "A static HTML, CSS and vanilla JavaScript application. Leaflet renders the map, data.js stores programme entries, app.js handles filtering and map/list interaction, and localStorage persists the watchlist in the browser. There is no application backend or build step.",
+    challenges:
+      "The project stores programme details in a manually maintained data file, so entries need ongoing verification against official university pages. The repository documentation explicitly marks six entries as sample placeholders rather than verified programme records.",
+    lessons:
+      "A small static application can provide useful search, map and persistence features without a frontend framework or backend when the data and interaction requirements are limited.",
+    technologies: ["JavaScript", "HTML", "CSS", "Leaflet.js", "Browser localStorage", "GitHub Pages"],
+    links: {
+      live: "https://nestorniloy.github.io/TechTrack-Germany-CS-Bachelors/",
+      github: "https://github.com/nestorNiloy/TechTrack-Germany-CS-Bachelors",
+    },
+  },
+  {
     id: "job-application-agent",
+    tags: ["Backend & APIs","Automation"],
     title: "Job Application Tracking Agent",
     subtitle: "FastAPI service for job discovery and application tracking",
     category: "Python Backend & Automation",
