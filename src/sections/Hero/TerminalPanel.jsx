@@ -1,21 +1,23 @@
 import { motion } from 'framer-motion'
 
-// Each line pre-built as JSX so keys/strings/punctuation get distinct
-// colors without pulling in a full syntax-highlighter dependency.
 const LINES = [
   <>{'{'}</>,
   <>  <span className="text-brand-primary">"engineer"</span>: <span className="text-brand-accent">"Niloy Barua"</span>,</>,
+  <>  <span className="text-brand-primary">"current_role"</span>: <span className="text-brand-accent">"Information Engineering student"</span>,</>,
   <>  <span className="text-brand-primary">"focus"</span>: [</>,
-  <>    <span className="text-brand-accent">"Backend Architecture"</span>,</>,
-  <>    <span className="text-brand-accent">"Async Data Pipelines"</span>,</>,
-  <>    <span className="text-brand-accent">"REST API Design"</span></>,
+  <>    <span className="text-brand-accent">"Backend Applications"</span>,</>,
+  <>    <span className="text-brand-accent">"REST API Design"</span>,</>,
+  <>    <span className="text-brand-accent">"Database-Backed Systems"</span>,</>,
+  <>    <span className="text-brand-accent">"Data Ingestion & Analytics"</span>,</>,
+  <>    <span className="text-brand-accent">"CI/CD & Automated Testing"</span></>,
   <>  ],</>,
   <>  <span className="text-brand-primary">"patterns"</span>: [</>,
   <>    <span className="text-brand-accent">"Layered Architecture"</span>,</>,
   <>    <span className="text-brand-accent">"Repository Pattern"</span>,</>,
+  <>    <span className="text-brand-accent">"Session-Based Authentication"</span>,</>,
   <>    <span className="text-brand-accent">"Graceful Degradation"</span></>,
   <>  ],</>,
-  <>  <span className="text-brand-primary">"status"</span>: <span className="text-brand-accent">"actively shipping"</span></>,
+  <>  <span className="text-brand-primary">"status"</span>: <span className="text-brand-accent">"Building practical software projects"</span></>,
   <>{'}'}</>,
 ]
 
@@ -29,10 +31,6 @@ const lineVariant = {
   visible: { opacity: 1, x: 0, transition: { duration: 0.25 } },
 }
 
-/**
- * Terminal-style panel that "types itself out" line by line on load,
- * rather than appearing as a static wall of pre-formatted text.
- */
 export function TerminalPanel() {
   return (
     <motion.div
