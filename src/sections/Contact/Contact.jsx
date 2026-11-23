@@ -32,7 +32,7 @@ export function Contact() {
         filled in, nothing is stored on a server.
       </p>
 
-      <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-4" noValidate>
+      <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-4">
         <div className="flex flex-col gap-1.5">
           <label htmlFor="name" className="text-sm font-medium text-text-main">
             Name
@@ -40,6 +40,8 @@ export function Contact() {
           <input
             id="name"
             type="text"
+            autoComplete="name"
+            required
             value={form.name}
             onChange={handleChange('name')}
             className="rounded-lg border border-border-subtle bg-bg-surface px-3 py-2 text-text-main outline-none focus-visible:border-brand-primary"
@@ -52,6 +54,8 @@ export function Contact() {
           <input
             id="email"
             type="email"
+            autoComplete="email"
+            required
             value={form.email}
             onChange={handleChange('email')}
             className="rounded-lg border border-border-subtle bg-bg-surface px-3 py-2 text-text-main outline-none focus-visible:border-brand-primary"
@@ -64,6 +68,7 @@ export function Contact() {
           <textarea
             id="message"
             rows={4}
+            required
             value={form.message}
             onChange={handleChange('message')}
             className="rounded-lg border border-border-subtle bg-bg-surface px-3 py-2 text-text-main outline-none focus-visible:border-brand-primary"
