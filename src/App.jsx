@@ -6,7 +6,7 @@ import { Stats } from './sections/Stats/Stats'
 import { Principles } from './sections/Principles/Principles'
 import { Contact } from './sections/Contact/Contact'
 
-// Projects section renders 6 cards with modals — heaviest section on the
+// Projects section renders project cards with detail modals — heaviest section on the
 // page, so it's split into its own chunk and loaded after first paint.
 const Projects = lazy(() => import('./sections/Projects/Projects').then((m) => ({ default: m.Projects })))
 
