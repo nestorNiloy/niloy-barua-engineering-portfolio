@@ -1,27 +1,32 @@
 /**
- * Technologies used in the projects shown here. This is a record of tools
- * used in the codebases, not a claim of professional-level mastery.
+ * Technologies used in the featured project repositories and in this
+ * portfolio itself. The separate portfolio category makes that distinction
+ * visible rather than implying every tool appears in every project.
  */
 export const skills = [
   {
     category: "Languages",
-    items: ["Python", "Java 17", "JavaScript", "HTML", "CSS"],
+    items: ["Python", "Java 17", "JavaScript"],
   },
   {
-    category: "Backend",
-    items: ["FastAPI", "Flask", "Spring Boot 3.4.5", "Spring Security", "SQLAlchemy 2.0", "Spring Data JPA", "Hibernate", "Pydantic v2"],
+    category: "Backend & APIs",
+    items: ["FastAPI", "Flask", "Spring Boot 3.4.5", "Spring Security", "SQLAlchemy 2.0", "Spring Data JPA", "Hibernate", "Pydantic v2", "Jinja2"],
   },
   {
-    category: "Data & Visualization",
-    items: ["PostgreSQL", "SQLite", "Pandas", "Matplotlib", "Seaborn", "Plotly", "Chart.js", "Leaflet.js", "Power BI"],
+    category: "Data & Databases",
+    items: ["PostgreSQL", "SQLite", "Pandas", "Power BI"],
+  },
+  {
+    category: "Frontend & Visualization",
+    items: ["HTML", "CSS", "Chart.js", "Leaflet.js", "Streamlit", "Plotly", "Matplotlib", "Seaborn", "Browser localStorage"],
   },
   {
     category: "Testing & Tooling",
     items: ["JUnit 5", "Mockito", "Testcontainers", "JaCoCo", "pytest", "Maven", "Docker", "Git", "GitHub Actions"],
   },
   {
-    category: "Deployment & UI",
-    items: ["Render", "GitHub Pages", "Streamlit", "Jinja2", "Framer Motion", "Tailwind CSS"],
+    category: "Portfolio & Hosting",
+    items: ["React 19", "Vite", "Tailwind CSS v4", "Framer Motion", "Lucide React", "Render", "GitHub Pages"],
   },
 ]
 
