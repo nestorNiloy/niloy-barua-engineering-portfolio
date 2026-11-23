@@ -4,9 +4,10 @@ A personal portfolio built with React, Vite, Tailwind CSS and Framer Motion. It 
 
 ## Featured work
 
-The portfolio currently presents seven projects:
+The portfolio currently presents eight projects:
 
 - **DualTrack Enterprise** — Java and Spring Boot application with user authentication, PostgreSQL persistence, automated tests and GitHub Actions CI.
+- **BookLoop Lite** — React and Express application with JWT cookie authentication, book listings, complete Borrow and Exchange workflows, backend integration tests and GitHub Actions CI. Sale and Rent remain workflow prototypes without payments.
 - **Transit Intelligence Platform** — FastAPI application for regional rail delay analytics, with generated demo data and manually triggered HAFAS ingestion.
 - **ATM Transaction Dashboard** — Flask API and separate Chart.js dashboard for ATM transaction analysis.
 - **European City Score Engine** — Streamlit app comparing five cities using job-market and reference data.
