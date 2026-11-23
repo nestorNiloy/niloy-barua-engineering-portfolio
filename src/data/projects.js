@@ -1,102 +1,114 @@
 /**
- * Project data — sourced from each repo's README/source and Niloy's own
- * CV bullets, not invented. `metrics` values are plain numbers so they can
- * drive the animated counters on each card; `suffix` covers cases like
- * "+" or "MB". `live` is only true when a visitor can actually load
- * working data — see the Dual Study Tracker entry for a project that's
- * deployed but not yet wired together end to end.
- *
- * Order is by overall impressiveness (architecture sophistication + what's
- * actually verifiable live), not by build date:
- * 1. Transit Intel Platform      — most sophisticated live backend
- * 2. AI Job Application Agent    — most sophisticated architecture overall,
- *                                   but not deployed yet
- * 3. European City Score Engine  — live, real multi-source normalization
- * 4. TechTrack Germany CS Map    — live, unique frontend/geospatial work,
- *                                   33 hand-verified real programs
- * 5. ATM Transaction Dashboard   — solid decoupled full-stack, live
- * 6. Dual Study Application Tracker — good architecture, frontend not wired
- * 7. Job Market Analyzer         — strong analysis, but notebook-only
+ * Project descriptions are kept deliberately factual. Metrics and features
+ * are taken from the linked repositories; planned work is not presented as
+ * implemented functionality.
  */
-
 export const projects = [
   {
-    id: "transit-intel-platform",
-    title: "Transit Intel Platform",
-    subtitle: "Async Analytics Backend for Public Transport Delay Data",
-    category: "Backend & Systems Architecture",
+    id: "dualtrack-enterprise",
+    title: "DualTrack Enterprise",
+    subtitle: "Multi-user job application management system",
+    category: "Java Backend & Enterprise Development",
     live: true,
     metrics: [
-      { label: "REST Endpoints", value: 11 },
-      { label: "German States Covered", value: 7 },
-      { label: "Seed Records", value: 1200, suffix: "+" },
+      { label: "Application statuses", value: 4 },
+      { label: "Core data entities", value: 3 },
+      { label: "Database", value: "PostgreSQL" },
     ],
     summary:
-      "An asynchronous FastAPI + SQLAlchemy backend exposing 11 REST endpoints for delay analytics, station reliability scoring, and a regional route optimizer for semester-ticket holders across 7 German states. Integrates the live Deutsche Bahn HAFAS API with retry/backoff error handling and trip-ID-based deduplication.",
+      "A full-stack application for managing job applications with individual user accounts, session-based authentication, application ownership checks, search, pagination, dashboard statistics and status-change history.",
     problem:
-      "Public transport delay data is scattered across raw feeds with no structure — there's no easy way to see which stations or routes are actually reliable over time.",
+      "A personal spreadsheet is useful for a small number of applications, but it does not provide user accounts, access separation, searchable records or a history of status changes.",
     architecture:
-      "A cleanly layered async Python package: main.py (routes and background jobs), models.py (SQLAlchemy entities), crud.py (async queries), analytics.py (business rules like congestion-slot definitions and on-time thresholds), and services.py (the live HAFAS ingestion client). The dashboard is server-rendered Jinja2 with Chart.js, no frontend build step.",
+      "A Spring Boot modular monolith with separate controller, service and repository responsibilities. Spring Security handles session authentication and CSRF protection; Spring Data JPA and Hibernate persist data in PostgreSQL, while Flyway manages schema migrations. The browser interface uses HTML, CSS and vanilla JavaScript and is served by the Spring Boot application.",
     challenges:
-      "The public HAFAS feed is unauthenticated, rate-limited, and occasionally flaky, so services.py retries transient failures and then logs-and-skips rather than crashing — departures are deduplicated by their HAFAS tripId so repeated polling updates a row's delay instead of creating duplicates.",
+      "Implementing user-specific data access required ownership checks in service and repository queries, so knowing another record's ID does not grant access. Session-based authentication also required correctly handling CSRF tokens in frontend requests.",
     lessons:
-      "Auto-seeding the database with a 1,200+ record historical matrix on first run (so the dashboard is never blank) mattered more for demo quality than any single feature — an empty state is the first thing anyone evaluating the project sees.",
-    technologies: ["Python", "FastAPI", "SQLAlchemy 2.0 (async)", "Pydantic v2", "SQLite", "Jinja2", "Chart.js"],
+      "Keeping business rules and ownership checks in the service layer makes the controller simpler and gives the application a clear place to test access rules. The project also includes automated unit and PostgreSQL integration tests in its CI workflow.",
+    technologies: ["Java 17", "Spring Boot 3.4.5", "Spring Security", "Spring Data JPA", "Hibernate", "PostgreSQL", "Flyway", "JUnit 5", "Mockito", "Testcontainers", "JaCoCo", "Maven", "Docker", "GitHub Actions"],
     links: {
-      live: "https://transit-intel-platform-production.up.railway.app",
-      apiDocs: "https://transit-intel-platform-production.up.railway.app/docs",
+      live: "https://dualtrack-enterprise.onrender.com",
+      github: "https://github.com/nestorNiloy/dualtrack-enterprise",
+    },
+  },
+  {
+    id: "transit-intel-platform",
+    title: "Transit Intelligence Platform",
+    subtitle: "Public transport delay analytics with a FastAPI backend",
+    category: "Python Backend & Data Processing",
+    live: true,
+    metrics: [
+      { label: "Documented API routes", value: 12 },
+      { label: "Sample observations", value: "≈1,200" },
+      { label: "Ingestion sources", value: 2 },
+    ],
+    summary:
+      "A FastAPI application for exploring regional rail delay patterns. It stores normalized trip observations, calculates station and route metrics, and presents analytics in a browser dashboard. The demo starts with generated sample data; HAFAS departure ingestion can be triggered manually.",
+    problem:
+      "Raw departure observations are difficult to compare over time. This project structures trip records so that delay, on-time rate and station-level performance can be queried and explored.",
+    architecture:
+      "A Python modular monolith built with FastAPI, SQLAlchemy's async ORM and SQLite. The application separates HTTP routes, request/response schemas, data-access functions, analytics rules and an external HAFAS adapter. Jinja2 renders the dashboard, with Chart.js used for charts.",
+    challenges:
+      "The external departure source is a community-run HAFAS wrapper, so requests need bounded retries and response normalization. Live ingestion is manually triggered rather than scheduled, and the Render Free deployment uses an ephemeral filesystem; the public demo therefore relies on generated sample data when its database is empty.",
+    lessons:
+      "A clear distinction between synthetic demonstration data and manually ingested external observations is essential when presenting analytics. The project also includes input validation, protected production ingestion endpoints, pytest checks and a GitHub Actions CI workflow.",
+    technologies: ["Python 3.11", "FastAPI", "SQLAlchemy 2.0 async", "Pydantic v2", "SQLite", "httpx", "Jinja2", "Chart.js", "pytest", "GitHub Actions", "Render"],
+    links: {
+      live: "https://transit-intel-platform.onrender.com/",
+      apiDocs: "https://transit-intel-platform.onrender.com/docs",
       github: "https://github.com/nestorNiloy/transit-intel-platform",
     },
   },
   {
-    id: "ai-job-application-agent",
-    title: "AI-Driven Autonomous Job Application & Tracking Agent",
-    subtitle: "Async Backend for Job Discovery, Tailoring, and Status Tracking",
-    category: "Backend & Automation",
-    live: false,
+    id: "atm-transaction-dashboard",
+    title: "ATM Transaction Dashboard",
+    subtitle: "Banking operations analytics with a separate Flask API",
+    category: "Full-Stack Analytics",
+    live: true,
     metrics: [
-      { label: "API Endpoints", value: 7 },
-      { label: "Status States", value: 6 },
-      { label: "Data Source", value: "Live Adzuna API" },
+      { label: "Transaction records", value: 11076 },
+      { label: "ATMs represented", value: 2790 },
+      { label: "States represented", value: 11 },
     ],
     summary:
-      "An asynchronous FastAPI backend that discovers real, live job listings via the Adzuna API, tailors application notes with a rule-based skill-matching engine, and tracks every application through a 6-state status machine with human-in-the-loop authorization before anything is marked as applied. A vanilla-JS Kanban board visualizes the pipeline in real time.",
+      "An analytics dashboard built around 11,076 FY2024 ATM transaction records covering 2,790 ATMs across 11 states. A Flask API aggregates the data and supplies filters; a separate Chart.js frontend displays transaction, revenue, cost, uptime and profitability views.",
     problem:
-      "Manually searching, tailoring, and tracking applications across job boards is repetitive, and fully-automated 'auto-apply' tools risk submitting to jobs that were never actually reviewed by a human.",
+      "Transaction-level spreadsheets make it difficult to compare performance across ATMs and regions. The dashboard groups the source data into KPIs and visual summaries that can be filtered by state, month and ATM type.",
     architecture:
-      "A layered async FastAPI service: models.py (SQLAlchemy 2.0 async models plus a JobStatus enum), schemas.py (Pydantic v2 validation), crud.py (the repository layer — all raw DB access lives here), services.py (the real Adzuna scraper and the rule-based tailoring engine), and main.py (routes, lifespan startup, a global exception handler). The Kanban frontend is served directly by FastAPI's StaticFiles at /ui/.",
+      "A decoupled setup with a Flask API hosted on Render and a static HTML/CSS/JavaScript dashboard hosted on GitHub Pages. Pandas handles data aggregation in the backend, and the browser requests the resulting data over HTTP.",
     challenges:
-      "Deduplicating re-scraped listings by Adzuna's own external_id, so re-running a search with the same keywords never creates duplicate rows — only genuinely new listings get inserted.",
+      "The dashboard needs consistent aggregations across transaction, ATM and state views. Separating the frontend and API also required configuring cross-origin requests and providing a static fallback when the API is unavailable.",
     lessons:
-      "The tailoring engine is a deterministic keyword-overlap matcher, not a live LLM call, and it says so explicitly rather than implying otherwise — while keeping the method signature swappable, so a real LLM call can later replace it without touching the router or repository layers.",
-    technologies: ["Python 3.11+", "FastAPI", "SQLAlchemy 2.0 (async)", "Pydantic v2", "aiosqlite", "httpx", "Uvicorn"],
-    // TODO: not deployed anywhere yet — add links.live once it's on Render.
+      "Separating data processing from presentation makes it possible to update the API and dashboard independently. The project also demonstrates how to expose analytical results through a small set of filterable API routes.",
+    technologies: ["Python", "Flask", "Pandas", "JavaScript", "Chart.js", "Render", "GitHub Pages"],
     links: {
-      github: "https://github.com/nestorNiloy/job-application-agent",
+      live: "https://nestorniloy.github.io/atm-transaction-dashboard/Web%20dashboard/atm-dashboard.html",
+      api: "https://atm-dashboard-api.onrender.com",
+      github: "https://github.com/nestorNiloy/atm-transaction-dashboard",
     },
   },
   {
     id: "european-city-score-engine",
     title: "European City Score Engine",
-    subtitle: "Multi-Factor City Ranking Tool with Live Job Market Data",
-    category: "Data Engineering & Analytics",
+    subtitle: "Interactive city comparison using weighted scoring",
+    category: "Data Analysis & Visualization",
     live: true,
     metrics: [
-      { label: "Cities Compared", value: 5 },
-      { label: "Job Listings Processed", value: 400, suffix: "+" },
-      { label: "Weighted Factors", value: 4 },
+      { label: "Cities compared", value: 5 },
+      { label: "Scoring factors", value: 4 },
+      { label: "Job data source", value: "Adzuna API" },
     ],
     summary:
-      "A Streamlit app that ranks 5 European tech cities using 400+ live job listings from the Adzuna API, blended with cost-of-living, safety, and internet-speed indices via a min-max normalization engine. Users control the weighting of each factor with sliders and watch rankings recompute instantly.",
+      "A Streamlit application that compares Berlin, Munich, Amsterdam, Vienna and Zurich using job-market data from the Adzuna API alongside static cost-of-living, safety and internet-speed indices. Users adjust factor weights and see the city scores update.",
     problem:
-      "Most 'best city to live in' rankings are static and impossible to personalize — they encode someone else's priorities, not yours.",
+      "City rankings often apply fixed priorities. This tool lets users change the relative importance of job opportunities, living costs, safety and internet speed.",
     architecture:
-      "A Streamlit frontend calls a data layer split into fetcher.py (Adzuna API calls plus static cost-of-living/safety/internet data) and scorer.py (min-max normalization and weighted scoring), keeping data access and scoring logic decoupled from the UI.",
+      "The Streamlit interface uses a data-fetching module for Adzuna and reference data, and a scoring module for min-max normalization and weighted totals. Plotly visualizes the city comparisons.",
     challenges:
-      "Combining a live API (job counts, which change hour to hour) with static annual indices (cost of living, safety) required normalizing both onto the same 0–100 scale before they could be meaningfully weighted together.",
+      "The project combines job-market values retrieved from an API with static reference indices. These inputs need to be normalized onto a common scale before the weighted scores can be compared.",
     lessons:
-      "Enforcing that slider weights must sum to 100 in the UI layer, rather than silently normalizing behind the scenes, keeps the scoring transparent and easy to reason about.",
-    technologies: ["Python", "Streamlit", "Plotly", "Adzuna API", "Pandas"],
+      "Making the scoring weights visible and requiring them to total 100 keeps the ranking logic understandable instead of hiding how the final score is calculated.",
+    technologies: ["Python", "Streamlit", "Pandas", "Plotly", "Adzuna API"],
     links: {
       live: "https://european-city-score-engine.streamlit.app",
       github: "https://github.com/nestorNiloy/european-city-score-engine",
@@ -105,112 +117,81 @@ export const projects = [
   {
     id: "techtrack-germany",
     title: "TechTrack Germany — CS Bachelor Map",
-    subtitle: "Interactive Geospatial Explorer for CS Bachelor Programs",
-    category: "Frontend & Geospatial Visualization",
+    subtitle: "Interactive map for exploring degree programmes in Germany",
+    category: "JavaScript & Geospatial Visualization",
     live: true,
     metrics: [
-      { label: "Programs Mapped", value: 33 },
-      { label: "Dual-Study Entries", value: 5 },
-      { label: "Tuition-Free Listings", value: 30 },
+      { label: "Programme entries", value: 33 },
+      { label: "Sample placeholders", value: 6 },
+      { label: "Filter dimensions", value: 3 },
     ],
     summary:
-      "An interactive Leaflet.js map comparing 33 hand-verified CS bachelor programs across Germany — dual-study and full-time — with tuition, job-market tier, and real train-time-to-Hauptbahnhof data to help with program shortlisting. Zero framework, zero build step, zero backend, by design.",
+      "A browser-based Leaflet map for exploring 33 Computer Science and related bachelor programme entries in Germany. It supports search, full-time/dual-study filters, a tuition filter and a saved watchlist. The dataset includes six sample placeholders, which are identified in the repository documentation.",
     problem:
-      "Comparing dual-study and full-time CS programs across Germany means digging through dozens of separate university pages with no shared structure — tuition, language requirements, and commute times are never in one place.",
+      "Comparing degree programmes requires checking separate university pages for location, study format, language and tuition information. This map brings the stored programme entries into one searchable interface.",
     architecture:
-      "Pure HTML/CSS/JS with no build tooling: data.js holds a flat array of program objects (one per university/program), app.js handles Leaflet marker rendering, filtering, and list-sync, and a small state object plus the HTML5 LocalStorage API power a client-side watchlist with zero backend.",
+      "A static HTML, CSS and vanilla JavaScript application. Leaflet renders the map, data.js stores programme entries, app.js handles filtering and map/list interaction, and localStorage persists the watchlist in the browser. There is no application backend or build step.",
     challenges:
-      "Every one of the 33 entries — coordinates, tuition, language, and nearest-city train times — was individually verified against the official program page rather than scraped or estimated, which is slower than automating it but means every number on the map is actually defensible.",
+      "The project stores programme details in a manually maintained data file, so entries need ongoing verification against official university pages. The repository documentation explicitly marks six entries as sample placeholders rather than verified programme records.",
     lessons:
-      "Deliberately choosing no framework and no build step wasn't a limitation — for a data-driven map like this, vanilla JS with Leaflet was simpler to ship and easier to keep dependency-free than reaching for React by default.",
-    technologies: ["JavaScript", "Leaflet.js", "CSS Grid", "HTML5 LocalStorage API"],
+      "A small static application can provide useful search, map and persistence features without a frontend framework or backend when the data and interaction requirements are limited.",
+    technologies: ["JavaScript", "HTML", "CSS", "Leaflet.js", "Browser localStorage", "GitHub Pages"],
     links: {
       live: "https://nestorniloy.github.io/TechTrack-Germany-CS-Bachelors/",
       github: "https://github.com/nestorNiloy/TechTrack-Germany-CS-Bachelors",
     },
   },
   {
-    id: "atm-transaction-dashboard",
-    title: "ATM Transaction Dashboard",
-    subtitle: "Full-Stack Analytics Platform for Banking Network Data",
-    category: "Data Engineering & Analytics",
-    live: true,
-    metrics: [
-      { label: "Transactions Processed", value: 11076 },
-      { label: "ATMs Tracked", value: 2790 },
-      { label: "REST Endpoints", value: 8 },
-    ],
-    summary:
-      "A full-stack analytics platform processing 11,076 transactions across 2,790 ATMs in 11 states, with 8 RESTful endpoints supporting dynamic filtering by state, month, and ATM type. Flask API deployed on Render, decoupled from a Chart.js dashboard on GitHub Pages.",
-    problem:
-      "Raw ATM transaction logs don't tell a bank anything about network health on their own — profitability, uptime, and maintenance cost only become visible once they're aggregated and filterable.",
-    architecture:
-      "A decoupled architecture: a Flask REST API (8 endpoints, Pandas for aggregation) deployed on Render, and a static Chart.js dashboard deployed separately on GitHub Pages, communicating over HTTP.",
-    challenges:
-      "Computing KPIs across 6 maintenance-cost categories and gross-profit analytics required aggregating transaction-level data into per-ATM and per-state rollups without recomputing the whole dataset on every filter change.",
-    lessons:
-      "Splitting the API and the frontend into separately deployed services (Render + GitHub Pages) made both faster to iterate on independently, at the cost of having to manage CORS explicitly.",
-    technologies: ["Python", "Flask", "Pandas", "JavaScript", "Chart.js"],
-    links: {
-      live: "https://nestorniloy.github.io/atm-transaction-dashboard/Web%20dashboard/atm-dashboard.html",
-      api: "https://atm-dashboard-api.onrender.com",
-      github: "https://github.com/nestorNiloy/atm-transaction-dashboard",
-    },
-  },
-  {
-    id: "dual-study-application-tracker",
-    title: "Dual Study Application Tracker",
-    subtitle: "Layered REST API for Tracking Dual-Study Job Applications",
-    category: "Backend & Enterprise Architecture",
-    live: false,
-    metrics: [
-      { label: "CRUD Endpoints", value: 5 },
-      { label: "Architecture Layers", value: 3 },
-    ],
-    summary:
-      "A REST API built with Java 17 and Spring Boot to track dual-study job applications end to end, with a responsive vanilla-JS SPA dashboard for real-time statistics, filtering, and toast notifications.",
-    problem:
-      "Tracking application status (applied, interviewing, offered, rejected) across many companies by hand in a spreadsheet doesn't scale and has no structured history.",
-    architecture:
-      "Classic 3-layer enterprise architecture: a Controller layer for HTTP requests and validation, a Service layer holding business logic, and a Repository layer managing persistence via Spring Data JPA over SQLite.",
-    challenges:
-      "The backend is deployed on Railway, but the GitHub Pages frontend is still hardcoded to call localhost:8080 — a visitor loading the live frontend today sees an empty state, since it can't reach the deployed API yet.",
-    lessons:
-      "Enums for application status at the model layer made filtering and status transitions far less error-prone than tracking status as a free-text string.",
-    technologies: ["Java 17", "Spring Boot", "Spring Data JPA", "Hibernate", "SQLite", "JavaScript"],
-    // TODO: repoint the frontend's API_BASE_URL to the Railway URL below,
-    // then flip `live` to true. Intentionally left open for a future commit.
-    links: {
-      github: "https://github.com/nestorNiloy/dual-study-application-tracker",
-      frontendPreview: "https://nestorniloy.github.io/dual-study-application-tracker/frontend/index.html",
-      api: "https://dual-study-application-tracker-production.up.railway.app/api/applications",
-    },
-  },
-  {
     id: "job-market-analyzer",
     title: "Job Market Analyzer",
-    subtitle: "Exploratory Analysis of 61,953 Job Postings",
-    category: "Data Analysis",
+    subtitle: "Exploratory analysis of 61,953 job postings",
+    category: "Data Analysis & Business Intelligence",
     live: false,
     metrics: [
-      { label: "Postings Analyzed", value: 61953 },
-      { label: "Features Tracked", value: 27 },
-      { label: "Dataset Size (MB)", value: 276 },
+      { label: "Job postings", value: 61953 },
+      { label: "Dataset fields", value: 27 },
+      { label: "Analysis tools", value: "Python + Power BI" },
     ],
     summary:
-      "An end-to-end analysis of the job market at scale — cleaning, normalizing, aggregating, and visualizing a 276 MB dataset of 61,953 job postings across 27 features to surface demand patterns across roles, companies, skills, and locations.",
+      "An exploratory analysis of 61,953 job postings and 27 dataset fields using Python, Pandas, Matplotlib and Seaborn. The repository also includes a Power BI report built from the same dataset.",
     problem:
-      "Individual job postings tell you almost nothing about the market; the useful signal only shows up once you aggregate tens of thousands of them.",
+      "Individual job advertisements provide limited insight into broader hiring patterns. Aggregating the dataset makes it possible to compare job titles, companies, requested skills, work arrangements and schedule types.",
     architecture:
-      "A reproducible Jupyter Notebook pipeline: raw CSV ingestion, cleaning and normalization with Pandas, aggregation across 27 features, and visualization with Matplotlib and Seaborn.",
+      "A Jupyter Notebook analysis workflow that loads the CSV dataset, cleans and normalizes fields with Pandas, then groups and visualizes the results. A separate Power BI report presents selected findings from the same data.",
     challenges:
-      "At 276 MB and 27 features, several columns had inconsistent formatting (mixed casing, duplicate categories spelled differently) that had to be normalized before any aggregation would be meaningful.",
+      "The source dataset contains inconsistent text categories and formatting. Cleaning those values before grouping is necessary to avoid splitting equivalent skills or categories across multiple labels.",
     lessons:
-      "SQL turned out to be the single most-demanded skill across the dataset (30,000+ mentions), and the on-site/remote split landed close to even — 55/45 — which ran counter to the fully-remote narrative common in tech discussion.",
-    technologies: ["Python", "Pandas", "Matplotlib", "Seaborn", "Jupyter Notebook"],
+      "The analysis found SQL to be the most frequently mentioned skill in this dataset. The findings describe this particular dataset and should not be treated as a complete measurement of the entire job market.",
+    technologies: ["Python", "Pandas", "Matplotlib", "Seaborn", "Jupyter Notebook", "Power BI"],
     links: {
+      dashboard: "https://app.powerbi.com/groups/me/reports/57fd1d03-881f-4366-9f9c-67cb151b5aa9/0f8da061594394de6575?experience=power-bi",
       github: "https://github.com/nestorNiloy/job-market-analyzer",
-      notebook: "https://share.google/MZkfaO99WYb4IeG8Y",
+    },
+  },
+  {
+    id: "job-application-agent",
+    title: "Job Application Tracking Agent",
+    subtitle: "FastAPI service for job discovery and application tracking",
+    category: "Python Backend & Automation",
+    live: false,
+    metrics: [
+      { label: "API endpoints", value: 7 },
+      { label: "Workflow states", value: 6 },
+      { label: "Job source", value: "Adzuna API" },
+    ],
+    summary:
+      "A FastAPI application that retrieves job listings from the Adzuna API, checks them against target skills using a rule-based keyword-overlap method, and tracks records through a six-state review and application workflow. A vanilla JavaScript Kanban interface is served by the backend.",
+    problem:
+      "Searching for roles and keeping track of promising listings and application progress can become repetitive when handled manually across multiple job boards.",
+    architecture:
+      "An asynchronous FastAPI backend with SQLAlchemy models, Pydantic schemas, a data-access module and service functions for Adzuna requests, deduplication and rule-based matching. The static Kanban interface is served through FastAPI.",
+    challenges:
+      "The application uses Adzuna's external listing ID to avoid inserting the same job repeatedly. The matching logic is deterministic keyword overlap; it does not call an LLM or submit applications automatically.",
+    lessons:
+      "Separating job retrieval, matching and application-state handling makes the workflow easier to follow. The current matching method is deliberately described as rule-based rather than as generative AI.",
+    technologies: ["Python 3.11", "FastAPI", "SQLAlchemy 2.0 async", "Pydantic v2", "SQLite", "httpx", "Uvicorn", "JavaScript"],
+    links: {
+      github: "https://github.com/nestorNiloy/job-application-agent",
     },
   },
 ]
